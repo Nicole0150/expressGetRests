@@ -16,4 +16,25 @@ app.get("/restaurants/:id", async (req, res) =>{
     res.json(restaurant);
 })
 
+app.use(express.json());
+app.use(express.urlencoded());
+
+app.post("/restaurants", async(req, res) =>{
+    const restaurant = await Restaurant.create(req.body);
+    res.json(restaurant);
+})
+
+app.put("/restaurants/:id", async (req, res) =>{
+    const route = req.params.id;
+    const replace = await Restaurant.update(req.body, {where: {id: route}})
+    res.json(replace);
+})
+
+app.delete("/restaurants/:id", async(req, res) =>{
+    const route = req.params.id;
+    const del = await Restaurant.destroy({where: {id: route}});
+    res.json(del);
+})
+
+
 module.exports = app;
